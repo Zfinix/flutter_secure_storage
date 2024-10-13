@@ -98,32 +98,34 @@ class FlutterSecureStorage {
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
   }) async {
-    if (value == null) {
-      await _platform.delete(
-        key: key,
-        options: _selectOptions(
-          iOptions,
-          aOptions,
-          lOptions,
-          webOptions,
-          mOptions,
-          wOptions,
-        ),
-      );
-    } else {
-      await _platform.write(
-        key: key,
-        value: value,
-        options: _selectOptions(
-          iOptions,
-          aOptions,
-          lOptions,
-          webOptions,
-          mOptions,
-          wOptions,
-        ),
-      );
-    }
+    try {
+      if (value == null) {
+        await _platform.delete(
+          key: key,
+          options: _selectOptions(
+            iOptions,
+            aOptions,
+            lOptions,
+            webOptions,
+            mOptions,
+            wOptions,
+          ),
+        );
+      } else {
+        await _platform.write(
+          key: key,
+          value: value,
+          options: _selectOptions(
+            iOptions,
+            aOptions,
+            lOptions,
+            webOptions,
+            mOptions,
+            wOptions,
+          ),
+        );
+      }
+    } catch (e) {}
 
     _callListenersForKey(key, value);
   }
